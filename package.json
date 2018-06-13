@@ -1,0 +1,40 @@
+{
+  "name": "headnhead-mongo-fork",
+  "version": "1.0.0",
+  "description": "Library can handle multiple different connections to MongoDB databases, using node-pool queuing, balancing features. Can be used as a middleware",
+  "main": "./dist/index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "babel-cli": "^6.0.0",
+    "babel-eslint": "^8.2.3",
+    "babel-jest": "^23.0.1",
+    "babel-preset-env": "^1.7.0",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.12.0",
+    "jest": "^23.1.0",
+    "pre-commit": "^1.2.2"
+  },
+  "scripts": {
+    "test": "jest ./src",
+    "build": "babel src -d dist --ignore spec.js,test.js",
+    "lint": "eslint ./src"
+  },
+  "pre-commit": [
+    "lint",
+    "test",
+    "build"
+  ],
+  "jest": {
+    "transform": {}
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HeadnHead/mongo-fork.git"
+  },
+  "author": "Kostya and Ramiz",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/HeadnHead/mongo-fork/issues"
+  },
+  "homepage": "https://github.com/HeadnHead/mongo-fork#readme"
+}
