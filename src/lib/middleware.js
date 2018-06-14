@@ -15,7 +15,7 @@ const middleware = (config, priority = 0) => {
    * */
   // Let's create a pool
   const pool = genericPool.createPool({
-    create: () => new Connector(config.connections),
+    create: () => new Connector(config),
     destroy: client => client.close(),
   }, config.opts);
 
