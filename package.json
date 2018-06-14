@@ -3,7 +3,11 @@
   "version": "1.0.0",
   "description": "Library can handle multiple different connections to MongoDB databases, using node-pool queuing, balancing features. Can be used as a middleware",
   "main": "./dist/index.js",
-  "dependencies": {},
+  "dependencies": {
+    "generic-pool": "^3.4.2",
+    "lodash": "^4.17.10",
+    "mongoose": "^5.1.5"
+  },
   "devDependencies": {
     "babel-cli": "^6.0.0",
     "babel-eslint": "^8.2.3",
