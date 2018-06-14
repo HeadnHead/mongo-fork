@@ -1,18 +1,20 @@
 import mongoose from 'mongoose';
 
-class Model { // extends Proxy {
+class Model {
   constructor(connection) {
-    // const handler = {
-    //   get(obj, prop) {
-    //     return prop in obj ? obj[prop] : Model.getScopeFunction(prop, obj);
-    //   },
-    // };
+    const handler = {
+      get(obj, prop) {
+        return prop in obj ? obj[prop] : Model.getScopeFunction(prop, obj);
+      },
+    };
 
-    // super({}, handler);
     // As soon as you create an object,
     // you need to attach connection to
     // this model and register model via mongoose
     this.setConnectionAndRegisterModel(connection);
+
+    // Use proxy to add custom functions
+    return new Proxy(this, handler);
   }
 
   static getScopeFunction(prop, obj) {
