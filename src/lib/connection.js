@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { find, map } from 'lodash/fp';
+import { find, map, flow, entries } from 'lodash/fp';
 
 // Some helper functions
 import { byName } from './helper';
@@ -9,7 +9,7 @@ import Model from "./model";
 
 class Connection {
   constructor(connectionInfo) {
-    return this.create(connectionInfo);
+    this.create(connectionInfo);
   }
 
   /*
@@ -26,18 +26,13 @@ class Connection {
     // First, let's create a connection using mongoose
     this.connection = mongoose.createConnection(connectionInfo.credentials);
     // Let's add this connection to each model we have here
-    this.models = map((model, name) => this.connection.model(name, model), connectionInfo.models);
-    // Return the connection we have built
-    return this;
+    this.models = flow(entries, map(([name, model]) => this.connection.model(name, model)))(connectionInfo.models);
   }
 
   use(modelName) {
-    return find(byName(modelName), this.models) || null;
+    // return this.models[0];
+    return this.connection.model(modelName);
   }
-
-  name = '';
-  models = null;
-  connection = null;
 }
 
 export default Connection;

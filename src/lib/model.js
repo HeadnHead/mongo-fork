@@ -1,16 +1,24 @@
 import mongoose from 'mongoose';
+// import { } from
 
 const getScopeFunction = (prop, obj) => {
+  console.log('prop', prop);
+
   const addScorePrefix = s => `scope${s}`;
   const firstUpperCase = s => s.charAt(0).toUpperCase() + s.substr(1);
 
   // Search for scope property
-  const scoreProp = addScorePrefix(firstUpperCase(prop));
-  return obj[scoreProp] ? obj[scoreProp] : null;
+  if (typeof prop === 'string') {
+    const scoreProp = addScorePrefix(firstUpperCase(prop));
+    return obj[scoreProp] ? obj[scoreProp] : null;
+  }
+
+  return null;
 };
 
 class Model {
   constructor() {
+    let self = this;
     const handler = {
       get(obj, prop) {
         // Check if there is
@@ -24,10 +32,10 @@ class Model {
           return scopeFunction;
         }
         // Return mongoose model
-        return this.schema[prop];
+        return self.schema[prop];
       },
       set(obj, prop, value, r) {
-        this.schema[prop] = value;
+        self.schema[prop] = value;
       },
     };
 
