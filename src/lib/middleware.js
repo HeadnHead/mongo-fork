@@ -1,6 +1,6 @@
 // Inspired by https://github.com/nswbmw/koa-mongo/
 import genericPool from 'generic-pool';
-import { mongo } from '../index';
+import Connector from './connector';
 
 const middleware = (config, priority = 0) => {
   if (!config.opts || !config.connections) {
@@ -15,7 +15,7 @@ const middleware = (config, priority = 0) => {
    * */
   // Let's create a pool
   const pool = genericPool.createPool({
-    create: () => mongo(config.connections),
+    create: () => new Connector(config.connections),
     destroy: client => client.close(),
   }, config.opts);
 
@@ -40,3 +40,4 @@ const middleware = (config, priority = 0) => {
 };
 
 export { middleware };
+
