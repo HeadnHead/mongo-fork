@@ -2,13 +2,45 @@ import mongoose from 'mongoose';
 // import { } from
 
 const getScopeFunction = (prop, obj) => {
-  console.log('prop', prop);
+  // console.log('prop', prop);
 
   const addScorePrefix = s => `scope${s}`;
   const firstUpperCase = s => s.charAt(0).toUpperCase() + s.substr(1);
 
+  if(prop == 'fuckfuckfuck') {
+    console.log('fuckfuckfuckfuckfuckfuck');
+    console.log('fuckfuckfuckfuckfuckfuck');
+    console.log('fuckfuckfuckfuckfuckfuck');
+    console.log('fuckfuckfuckfuckfuckfuck');
+    console.log('fuckfuckfuckfuckfuckfuck');
+    console.log('fuckfuckfuckfuckfuckfuck');
+    console.log('fuckfuckfuckfuckfuckfuck');
+    console.log('fuckfuckfuckfuckfuckfuck');
+    console.log('fuckfuckfuckfuckfuckfuck');
+    console.log('fuckfuckfuckfuckfuckfuck');
+    console.log('fuckfuckfuckfuckfuckfuck');
+    console.log('fuckfuckfuckfuckfuckfuck');
+    console.log('fuckfuckfuckfuckfuckfuck');
+    console.log('fuckfuckfuckfuckfuckfuck');
+    console.log('fuckfuckfuckfuckfuckfuck');
+    console.log('fuckfuckfuckfuckfuckfuck');
+    console.log('fuckfuckfuckfuckfuckfuck');
+    console.log('fuckfuckfuckfuckfuckfuck');
+    console.log('fuckfuckfuckfuckfuckfuck');
+    console.log('fuckfuckfuckfuckfuckfuck');
+    console.log('fuckfuckfuckfuckfuckfuck');
+    console.log('fuckfuckfuckfuckfuckfuck');
+    console.log('fuckfuckfuckfuckfuckfuck');
+    console.log('fuckfuckfuckfuckfuckfuck');
+    console.log('fuckfuckfuckfuckfuckfuck');
+    console.log('fuckfuckfuckfuckfuckfuck');
+    console.log('fuckfuckfuckfuckfuckfuck');
+    console.log('fuckfuckfuckfuckfuckfuck');
+  }
+
   // Search for scope property
   if (typeof prop === 'string') {
+    // console.log('prop', prop, obj);
     const scoreProp = addScorePrefix(firstUpperCase(prop));
     return obj[scoreProp] ? obj[scoreProp] : null;
   }
@@ -18,9 +50,10 @@ const getScopeFunction = (prop, obj) => {
 
 class Model {
   constructor() {
-    let self = this;
+    const self = this;
     const handler = {
-      get(obj, prop) {
+      get(obj, prop, receiver) {
+        // console.log(prop);
         // Check if there is
         // property in the model
         if (prop in obj) {
@@ -36,6 +69,7 @@ class Model {
       },
       set(obj, prop, value, r) {
         self.schema[prop] = value;
+        return true;
       },
     };
 
