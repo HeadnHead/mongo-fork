@@ -17,13 +17,7 @@ var _fp = require('lodash/fp');
 
 var _helper = require('./helper');
 
-var _model = require('./model');
-
-var _model2 = _interopRequireDefault(_model);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-// Initialize models
 
 class Connection {
   constructor(connectionInfo) {
@@ -58,6 +52,7 @@ class Connection {
       }
       return mongoose;
     }))(connectionInfo.models);
+    console.log(`[Mongo-multiconnector] A connection was established (${connectionInfo.name})`);
   }
 
   // Use mongoose model

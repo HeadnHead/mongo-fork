@@ -10,11 +10,7 @@ var _mongoose2 = _interopRequireDefault(_mongoose);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// import { } from
-
 const getScopeFunction = (prop, obj) => {
-  // console.log('prop', prop);
-
   const addScorePrefix = s => `scope${s}`;
   const firstUpperCase = s => s.charAt(0).toUpperCase() + s.substr(1);
 

@@ -4,10 +4,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _mongoose = require('mongoose');
-
-var _mongoose2 = _interopRequireDefault(_mongoose);
-
 var _fp = require('lodash/fp');
 
 var _connection = require('./connection');
@@ -31,6 +27,7 @@ class Connector {
 
     this.connections = createConnections(connections);
     this.defaultConnection = findDefaultConnection(connections) || (0, _fp.first)(this.connections);
+    console.log('[Mongo-multiconnector] Connector was created');
   }
 
   connect(name) {
