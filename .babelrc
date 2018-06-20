@@ -2,9 +2,14 @@
   "presets": [
     ["env", {
       "targets": {
-        "node": "current"
+        "node": "6.10"
       }
     }]
   ],
-  "plugins": ["transform-class-properties"]
+  "plugins": [
+    "transform-async-to-generator",
+    "transform-class-properties",
+    "transform-es2015-parameters",
+    "transform-es2015-destructuring"
+  ]
 }

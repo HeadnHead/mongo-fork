@@ -1,6 +1,6 @@
 {
   "name": "mongo-multiconnections",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Library can handle multiple different connections to MongoDB databases, using node-pool queuing, balancing features. Can be used as a middleware",
   "main": "./dist/index.js",
   "dependencies": {
@@ -12,7 +12,10 @@
     "babel-cli": "^6.0.0",
     "babel-eslint": "^8.2.3",
     "babel-jest": "^23.0.1",
+    "babel-plugin-transform-async-to-generator": "^6.24.1",
     "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-es2015-destructuring": "^6.23.0",
+    "babel-plugin-transform-es2015-parameters": "^6.24.1",
     "babel-preset-env": "^1.7.0",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-import": "^2.12.0",

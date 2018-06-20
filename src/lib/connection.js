@@ -3,9 +3,6 @@ import { find, map, flow, entries } from 'lodash/fp';
 
 // Some helper functions
 import { byName } from './helper';
-import Model from "./model";
-
-// Initialize models
 
 class Connection {
   constructor(connectionInfo) {
@@ -35,6 +32,7 @@ class Connection {
       }
       return mongoose;
     }))(connectionInfo.models);
+    console.log(`[Mongo-multiconnector] A connection was established (${connectionInfo.name})`);
   }
 
   // Use mongoose model

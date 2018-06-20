@@ -1,6 +1,20 @@
-import mongoose from 'mongoose';
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _mongoose = require('mongoose');
+
+var _mongoose2 = _interopRequireDefault(_mongoose);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// import { } from
 
 const getScopeFunction = (prop, obj) => {
+  // console.log('prop', prop);
+
   const addScorePrefix = s => `scope${s}`;
   const firstUpperCase = s => s.charAt(0).toUpperCase() + s.substr(1);
 
@@ -36,11 +50,11 @@ class Model {
       set(obj, prop, value, r) {
         self.schema[prop] = value;
         return true;
-      },
+      }
     };
 
     // Create mongoose schema
-    this.schema = new mongoose.Schema(this.constructor.rules, this.constructor.options);
+    this.schema = new _mongoose2.default.Schema(this.constructor.rules, this.constructor.options);
 
     // Use proxy to add custom functions
     return new Proxy(this, handler);
@@ -58,8 +72,8 @@ class Model {
     next();
   }
 
-  static rules = {};
-  static options = {};
 }
 
-export default Model;
+Model.rules = {};
+Model.options = {};
+exports.default = Model;

@@ -1,4 +1,3 @@
-import mongoose from 'mongoose';
 import { get, map, find, first, flow } from 'lodash/fp';
 
 // Particular connection to MongoDB
@@ -14,6 +13,7 @@ class Connector {
   constructor({ connections }) {
     this.connections = createConnections(connections);
     this.defaultConnection = findDefaultConnection(connections) || first(this.connections);
+    console.log('[Mongo-multiconnector] Connector was created')
   }
 
   connect(name) {
