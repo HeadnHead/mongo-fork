@@ -15,8 +15,10 @@ var _connector2 = _interopRequireDefault(_connector);
 
 var _middleware = require('./lib/middleware');
 
+var _middleware2 = _interopRequireDefault(_middleware);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.Model = _model2.default;
 exports.Connector = _connector2.default;
-exports.middleware = _middleware.middleware;
+exports.middleware = _middleware2.default;
