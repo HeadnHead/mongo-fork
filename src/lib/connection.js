@@ -1,12 +1,17 @@
-import mongoose from 'mongoose';
-import { find, map, flow, entries } from 'lodash/fp';
+import {
+  find,
+  map,
+  flow,
+  entries,
+} from 'lodash/fp';
 
 // Some helper functions
 import { byName } from './helper';
 
 class Connection {
-  constructor(connectionInfo) {
-    this.create(connectionInfo);
+  constructor(mongoose, connectionInfo) {
+    this.mongoose = mongoose;
+    this.connectionInfo = connectionInfo;
   }
 
   /*
@@ -17,13 +22,13 @@ class Connection {
   *   models(Array), // [user: User, item: Item, cat: Cat, dog: Dog] (class that extends Model)
   * }
   * */
-  async create(connectionInfo) {
+  async create() {
     // Save name of the connection
-    this.name = connectionInfo.name;
+    this.name = this.connectionInfo.name;
 
     // First, let's create a connection using mongoose
-    this.connection = await mongoose.createConnection(connectionInfo.credentials);
-    console.log(`[Mongo-multiconnector] A connection was established (${connectionInfo.name})`);
+    this.connection = await this.mongoose.createConnection(this.connectionInfo.credentials);
+    console.log(`[Mongo-multiconnector] A connection was established (${this.connectionInfo.name})`);
 
     // Let's add this connection to each model we have here
     this.models = flow(entries, map(([name, model]) => {
@@ -34,7 +39,9 @@ class Connection {
         return Object.assign(model, { name, mongoose: mongooseModel });
       }
       return mongooseModel;
-    }))(connectionInfo.models);
+    }))(this.connectionInfo.models);
+
+    return this;
   }
 
   // Use mongoose model

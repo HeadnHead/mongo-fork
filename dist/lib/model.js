@@ -3,13 +3,6 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-
-var _mongoose = require('mongoose');
-
-var _mongoose2 = _interopRequireDefault(_mongoose);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
 const getScopeFunction = (prop, obj) => {
   const addScorePrefix = s => `scope${s}`;
   const firstUpperCase = s => s.charAt(0).toUpperCase() + s.substr(1);
@@ -25,7 +18,7 @@ const getScopeFunction = (prop, obj) => {
 };
 
 class Model {
-  constructor() {
+  constructor(mongoose) {
     const self = this;
     const handler = {
       get(obj, prop) {
@@ -50,7 +43,7 @@ class Model {
     };
 
     // Create mongoose schema
-    this.schema = new _mongoose2.default.Schema(this.constructor.rules, this.constructor.options);
+    this.schema = new mongoose.Schema(this.constructor.rules, this.constructor.options);
 
     // Use proxy to add custom functions
     return new Proxy(this, handler);

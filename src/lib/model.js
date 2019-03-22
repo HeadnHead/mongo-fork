@@ -1,5 +1,3 @@
-import mongoose from 'mongoose';
-
 const getScopeFunction = (prop, obj) => {
   const addScorePrefix = s => `scope${s}`;
   const firstUpperCase = s => s.charAt(0).toUpperCase() + s.substr(1);
@@ -15,7 +13,7 @@ const getScopeFunction = (prop, obj) => {
 };
 
 class Model {
-  constructor() {
+  constructor(mongoose) {
     const self = this;
     const handler = {
       get(obj, prop) {

@@ -4,6 +4,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _lodash = require('lodash');
+
 var _fp = require('lodash/fp');
 
 var _connection = require('./connection');
@@ -22,16 +24,29 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 // Some helper functions
 
 
-const createConnections = (0, _fp.map)(connection => new _connection2.default(connection));
 const findDefaultConnection = (0, _fp.find)((0, _fp.get)('default'));
 
 class Connector {
   constructor(_ref) {
-    let connections = _ref.connections;
+    let mongoose = _ref.mongoose,
+        connections = _ref.connections;
 
-    this.connections = createConnections(connections);
-    this.defaultConnection = findDefaultConnection(connections) || (0, _fp.first)(this.connections);
-    console.log('[Mongo-multiconnector] Connector was created');
+    this.createConnections(mongoose, connections).then(() => {
+      console.log('[Mongo-multiconnector] Connector was created');
+    });
+  }
+
+  createConnections(mongoose, connectionsData) {
+    var _this = this;
+
+    return _asyncToGenerator(function* () {
+      _this.connections = yield Promise.all((0, _lodash.map)(connectionsData, function (connectionData) {
+        const connection = new _connection2.default(mongoose, connectionData);
+        return connection.create();
+      }));
+
+      _this.defaultConnection = findDefaultConnection(_this.connections) || (0, _fp.first)(_this.connections);
+    })();
   }
 
   connect(name) {
@@ -43,10 +58,10 @@ class Connector {
   }
 
   disconnect() {
-    var _this = this;
+    var _this2 = this;
 
     return _asyncToGenerator(function* () {
-      yield Promise.all((0, _fp.map)(_this.connections, function (connection) {
+      yield Promise.all((0, _lodash.map)(_this2.connections, function (connection) {
         return connection.close();
       }));
     })();

@@ -1,6 +1,6 @@
 {
   "name": "mongo-multiconnections",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Library can handle multiple different connections to MongoDB databases, using node-pool queuing, balancing features. Can be used as a middleware",
   "main": "./dist/index.js",
   "dependencies": {
