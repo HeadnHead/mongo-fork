@@ -17,22 +17,24 @@ class Connection {
   *   models(Array), // [user: User, item: Item, cat: Cat, dog: Dog] (class that extends Model)
   * }
   * */
-  create(connectionInfo) {
+  async create(connectionInfo) {
     // Save name of the connection
     this.name = connectionInfo.name;
+
     // First, let's create a connection using mongoose
-    this.connection = mongoose.createConnection(connectionInfo.credentials);
+    this.connection = await mongoose.createConnection(connectionInfo.credentials);
+    console.log(`[Mongo-multiconnector] A connection was established (${connectionInfo.name})`);
+
     // Let's add this connection to each model we have here
     this.models = flow(entries, map(([name, model]) => {
       // Register model in mongoose
-      const mongoose = this.connection.model(name, model);
+      const mongooseModel = this.connection.model(name, model);
       if (model.schema) {
         // Important not to create a new object
-        return Object.assign(model, { name, mongoose });
+        return Object.assign(model, { name, mongoose: mongooseModel });
       }
-      return mongoose;
+      return mongooseModel;
     }))(connectionInfo.models);
-    console.log(`[Mongo-multiconnector] A connection was established (${connectionInfo.name})`);
   }
 
   // Use mongoose model
@@ -49,6 +51,8 @@ class Connection {
     if (this.connection) {
       return new Promise(this.connection.close);
     }
+
+    return null;
   }
 }
 

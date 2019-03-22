@@ -1,4 +1,4 @@
-import { get, map, find, first, flow } from 'lodash/fp';
+import { get, map, find, first } from 'lodash/fp';
 
 // Particular connection to MongoDB
 import Connection from './connection';
@@ -13,7 +13,7 @@ class Connector {
   constructor({ connections }) {
     this.connections = createConnections(connections);
     this.defaultConnection = findDefaultConnection(connections) || first(this.connections);
-    console.log('[Mongo-multiconnector] Connector was created')
+    console.log('[Mongo-multiconnector] Connector was created');
   }
 
   connect(name) {
@@ -25,12 +25,10 @@ class Connector {
   }
 
   async disconnect() {
-    await Promise.all(
-      map(
-        this.connections,
-        connection => connection.close()
-      ),
-    );
+    await Promise.all(map(
+      this.connections,
+      connection => connection.close(),
+    ));
   }
 }
 

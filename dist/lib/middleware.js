@@ -3,7 +3,6 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.middleware = undefined;
 
 var _genericPool = require('generic-pool');
 
@@ -22,7 +21,7 @@ const middleware = function (config) {
   let priority = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
 
   if (!config.opts || !config.connections) {
-    throw 'Invalid config';
+    throw new Error('Invalid config');
   }
   /*
    * Config consists of:
@@ -34,7 +33,7 @@ const middleware = function (config) {
   // Let's create a pool
   const pool = _genericPool2.default.createPool({
     create: () => new _connector2.default(config),
-    destroy: client => client.close()
+    destroy: client => client.disconnect()
   }, config.opts);
 
   const release = (() => {
@@ -78,4 +77,4 @@ const middleware = function (config) {
   })();
 };
 
-exports.middleware = middleware;
+exports.default = middleware;

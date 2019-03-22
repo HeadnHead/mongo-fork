@@ -18,7 +18,7 @@ class Model {
   constructor() {
     const self = this;
     const handler = {
-      get(obj, prop, receiver) {
+      get(obj, prop) {
         // console.log(prop);
         // Check if there is
         // property in the model
@@ -33,7 +33,7 @@ class Model {
         // Return mongoose model
         return self.schema[prop];
       },
-      set(obj, prop, value, r) {
+      set(obj, prop, value) {
         self.schema[prop] = value;
         return true;
       },

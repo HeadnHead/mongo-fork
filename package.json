@@ -4,6 +4,7 @@
   "description": "Library can handle multiple different connections to MongoDB databases, using node-pool queuing, balancing features. Can be used as a middleware",
   "main": "./dist/index.js",
   "dependencies": {
+    "eslint": "^5.15.3",
     "generic-pool": "3.5.0",
     "lodash": "4.17.10",
     "mongoose": "5.1.5"
@@ -23,7 +24,6 @@
     "pre-commit": "^1.2.2"
   },
   "scripts": {
-    "test": "jest ./src",
     "build": "babel src -d dist --ignore spec.js,test.js",
     "lint": "eslint ./src"
   },

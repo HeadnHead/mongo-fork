@@ -11,7 +11,7 @@ class User extends Model {
   };
 
   scopeCreateOurNewUser() {
-    console.log('scopeCreate');
+    console.log('scopeCreate', this.rules);
   }
 }
 

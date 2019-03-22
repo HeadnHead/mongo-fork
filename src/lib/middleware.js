@@ -4,7 +4,7 @@ import Connector from './connector';
 
 const middleware = (config, priority = 0) => {
   if (!config.opts || !config.connections) {
-    throw 'Invalid config';
+    throw new Error('Invalid config');
   }
   /*
    * Config consists of:
@@ -23,8 +23,8 @@ const middleware = (config, priority = 0) => {
     await pool.release(resource);
   };
 
-  return async (ctx, next) => {
-    return pool.acquire(priority)
+  return async (ctx, next) =>
+    pool.acquire(priority)
       .then(async (db) => {
         ctx.mongo = db;
         return next();
@@ -36,8 +36,7 @@ const middleware = (config, priority = 0) => {
         await release(ctx.mongo);
         throw e;
       });
-  };
 };
 
-export { middleware };
+export default middleware;
 
