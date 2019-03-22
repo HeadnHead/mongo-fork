@@ -44,6 +44,12 @@ class Connection {
   useModel(modelName) {
     return find(byName(modelName), this.models);
   }
+
+  close() {
+    if (this.connection) {
+      return new Promise(this.connection.close);
+    }
+  }
 }
 
 export default Connection;

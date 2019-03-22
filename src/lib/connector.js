@@ -23,6 +23,15 @@ class Connector {
   use(modelName) {
     return this.defaultConnection.use(modelName);
   }
+
+  async disconnect() {
+    await Promise.all(
+      map(
+        this.connections,
+        connection => connection.close()
+      ),
+    );
+  }
 }
 
 export default Connector;
