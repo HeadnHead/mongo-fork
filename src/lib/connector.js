@@ -11,8 +11,10 @@ const findDefaultConnection = find(get('default'));
 
 class Connector {
   constructor({ mongoose, connections }) {
+    this.ready = false;
     this.createConnections(mongoose, connections)
       .then(() => {
+        this.ready = true;
         console.log('[Mongo-multiconnector] Connector was created');
       });
   }
@@ -26,16 +28,37 @@ class Connector {
     this.defaultConnection = findDefaultConnection(this.connections) || first(this.connections);
   }
 
+  async waitToBeReady() {
+    if (this.ready) {
+      return true;
+    }
+
+    return new Promise(res => setTimeout(res, 500))
+      .then(() => this.waitToBeReady());
+  }
+
   connect(name) {
+    if (!this.ready) {
+      return false;
+    }
+
     return find(byName(name), this.connections);
   }
 
   use(modelName) {
+    if (!this.ready) {
+      return false;
+    }
+
     return this.defaultConnection.use(modelName);
   }
 
   async disconnect() {
-    await Promise.all(map(
+    if (!this.ready) {
+      return false;
+    }
+
+    return Promise.all(map(
       this.connections,
       connection => connection.close(),
     ));
