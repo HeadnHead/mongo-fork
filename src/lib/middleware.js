@@ -26,6 +26,7 @@ const middleware = (config, priority = 0) => {
   return async (ctx, next) =>
     pool.acquire(priority)
       .then(async (db) => {
+        await db.waitToBeReady();
         ctx.mongo = db;
         return next();
       })

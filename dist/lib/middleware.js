@@ -50,6 +50,7 @@ const middleware = function (config) {
     var _ref2 = _asyncToGenerator(function* (ctx, next) {
       return pool.acquire(priority).then((() => {
         var _ref3 = _asyncToGenerator(function* (db) {
+          yield db.waitToBeReady();
           ctx.mongo = db;
           return next();
         });

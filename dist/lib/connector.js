@@ -31,7 +31,9 @@ class Connector {
     let mongoose = _ref.mongoose,
         connections = _ref.connections;
 
+    this.ready = false;
     this.createConnections(mongoose, connections).then(() => {
+      this.ready = true;
       console.log('[Mongo-multiconnector] Connector was created');
     });
   }
@@ -49,19 +51,47 @@ class Connector {
     })();
   }
 
+  waitToBeReady() {
+    var _this2 = this;
+
+    return _asyncToGenerator(function* () {
+      if (_this2.ready) {
+        return true;
+      }
+
+      return new Promise(function (res) {
+        return setTimeout(res, 500);
+      }).then(function () {
+        return _this2.waitToBeReady();
+      });
+    })();
+  }
+
   connect(name) {
+    if (!this.ready) {
+      return false;
+    }
+
     return (0, _fp.find)((0, _helper.byName)(name), this.connections);
   }
 
   use(modelName) {
+    if (!this.ready) {
+      return false;
+    }
+
     return this.defaultConnection.use(modelName);
   }
 
   disconnect() {
-    var _this2 = this;
+    var _this3 = this;
 
     return _asyncToGenerator(function* () {
-      yield Promise.all((0, _lodash.map)(_this2.connections, function (connection) {
+      if (!_this3.ready) {
+        return false;
+      }
+
+      return Promise.all((0, _lodash.map)(_this3.connections, function (connection) {
         return connection.close();
       }));
     })();
