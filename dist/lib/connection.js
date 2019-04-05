@@ -72,7 +72,7 @@ class Connection {
 
   close() {
     if (this.connection) {
-      return new Promise(this.connection.close);
+      return this.connection.close();
     }
 
     return null;
